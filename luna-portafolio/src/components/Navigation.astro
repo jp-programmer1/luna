@@ -1,17 +1,19 @@
 ---
-const navItems = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Biografía', href: '#biografia' },
-  { label: 'Material', href: '#material' },
-  { label: 'Contacto', href: '#contacto' },
-];
+interface Props {
+  brand: string;
+  homeHref: string;
+  items: { label: string; href: string }[];
+}
+const { brand, homeHref, items: navItems } = Astro.props;
+// "Luna Kuyen" → "Luna" en blanco y "Kuyen" en violeta, como el diseño original.
+const [first, ...rest] = brand.trim().split(/\s+/);
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-6" data-nav>
   <div class="container mx-auto px-6 flex items-center justify-between">
     <div>
-      <a href="#inicio" class="text-xl md:text-2xl font-bold tracking-wider text-white">Luna</a>
-      <a href="#inicio" class="text-xl md:text-2xl font-bold tracking-wider text-primary"> Kuyen</a>
+      <a href={homeHref} class="text-xl md:text-2xl font-bold tracking-wider text-white">{first}</a>
+      {rest.length > 0 && <a href={homeHref} class="text-xl md:text-2xl font-bold tracking-wider text-primary"> {rest.join(' ')}</a>}
     </div>
 
     <!-- Desktop Navigation -->

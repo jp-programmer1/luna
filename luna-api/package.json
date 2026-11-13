@@ -1,6 +1,6 @@
 {
   "name": "luna-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "API del sitio de Luna Kuyen: borrador, publicación, medios y mensajes",
   "scripts": {
@@ -8,7 +8,11 @@
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "jest"
+    "test": "jest",
+    "seed": "nest build && node dist/scripts/seed.js",
+    "user:add": "nest build && node dist/scripts/add-user.js",
+    "test:e2e": "jest --config test/jest-e2e.json --runInBand",
+    "secret": "node tools/gen-secret.mjs"
   },
   "dependencies": {
     "@luna/shared": "workspace:*",
@@ -19,9 +23,12 @@
     "@nestjs/platform-express": "^11.1.0",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/terminus": "^11.0.0",
+    "@nestjs/throttler": "^6.7.1",
+    "cookie-parser": "^1.4.7",
     "mongoose": "^8.18.0",
     "nestjs-zod": "^5.0.0",
     "reflect-metadata": "^0.2.2",
+    "resend": "^6.38.0",
     "rxjs": "^7.8.0",
     "zod": "^4.1.0"
   },
@@ -29,18 +36,28 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.1.0",
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.0.0",
+    "@types/supertest": "^7.2.1",
     "jest": "^30.0.0",
+    "mongodb-memory-server": "^10.4.3",
+    "supertest": "^7.3.2",
     "ts-jest": "^29.4.0",
     "typescript": "^5.9.0"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
-    "transform": { "^.+\\.ts$": "ts-jest" },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
     "testEnvironment": "node"
   }
 }

@@ -1,0 +1,20 @@
+---
+import SitePage from '../../components/SitePage.astro';
+import { getPreviewSite } from '../../lib/site';
+
+// Excluida del ISR: siempre muestra el borrador actual. La abre el panel en un iframe.
+export const prerender = false;
+
+const result = await getPreviewSite(Astro.params.token ?? '');
+if ('error' in result) {
+  console.error(`[preview] ${result.error}`);
+  return new Response(result.error, {
+    status: 404,
+    headers: { 'content-type': 'text/plain; charset=utf-8', 'x-robots-tag': 'noindex' },
+  });
+}
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex');
+---
+
+<SitePage site={result.site} preview />

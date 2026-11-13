@@ -1,0 +1,49 @@
+---
+/**
+ * Registro de secciones: cada tipo de @luna/shared tiene su componente.
+ * Sumar un tipo = esquema en luna-shared + componente acá + editor en el panel.
+ */
+import type { Section } from '@luna/shared';
+import { mediaPosition, mediaUrl, type PublicSite } from '../lib/site';
+import BiographySection from './BiographySection.astro';
+import ContactSection from './ContactSection.astro';
+import GallerySection from './GallerySection.astro';
+import HeroSection from './HeroSection.astro';
+import TextSection from './TextSection.astro';
+
+interface Props {
+  site: PublicSite;
+  section: Section;
+  next: Section | undefined;
+}
+const { site, section: s, next } = Astro.props;
+const common = { anchor: s.anchor, variant: s.variant };
+---
+
+{s.type === 'hero' && (
+  <HeroSection
+    {...common}
+    {...s.props}
+    backgroundUrl={s.props.backgroundImageId ? mediaUrl(site, s.props.backgroundImageId, '') || null : null}
+    backgroundPosition={mediaPosition(site, s.props.backgroundImageId)}
+    nextHref={next ? `#${next.anchor}` : null}
+  />
+)}
+{s.type === 'biography' && (
+  <BiographySection
+    {...common}
+    title={s.props.title}
+    body={s.props.body}
+    imageUrl={mediaUrl(site, s.props.imageId, '/bio.jpg')}
+    imagePosition={mediaPosition(site, s.props.imageId)}
+    imageAlt={s.props.imageAlt}
+    imageSide={s.props.imageSide}
+  />
+)}
+{s.type === 'gallery' && (
+  <GallerySection {...common} eyebrow={s.props.eyebrow} title={s.props.title} showTypeFilter={s.props.showTypeFilter} />
+)}
+{s.type === 'contact' && (
+  <ContactSection {...common} {...s.props} contact={site.settings.contact} socials={site.settings.socials} />
+)}
+{s.type === 'text' && <TextSection {...common} title={s.props.title} body={s.props.body} />}

@@ -1,247 +1,205 @@
 ---
+import type { Settings } from '@luna/shared';
+import { variantClass } from '../lib/site';
+
+interface Props {
+  anchor: string;
+  variant: 'plain' | 'card';
+  eyebrow: string;
+  title: string;
+  intro: string;
+  showForm: boolean;
+  contact: Settings['contact'];
+  socials: Settings['socials'];
+}
+const { anchor, variant, eyebrow, title, intro, showForm, contact, socials } = Astro.props;
+const tel = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, '')}` : null;
+
+const socialLabel: Record<Settings['socials'][number]['network'], string> = {
+  instagram: 'Instagram',
+  youtube: 'YouTube',
+  facebook: 'Facebook',
+  tiktok: 'TikTok',
+  spotify: 'Spotify',
+  other: 'Link',
+};
 ---
 
-<section id="contacto" class="relative z-20 py-32 px-6 bg-card/30" data-contact>
+<section id={anchor} class:list={['relative z-20 py-32 px-6', variantClass(variant)]} data-contact>
   <div class="container mx-auto max-w-5xl">
     <div class="text-center mb-16">
-      <p class="text-primary text-sm uppercase tracking-[0.3em] mb-4">Hablemos</p>
-      <h2 class="text-3xl md:text-5xl font-bold text-foreground mb-4">Contacto</h2>
-      <p class="text-muted-foreground max-w-lg mx-auto">
-        ¿Tienes un proyecto en mente? Me encantaría escuchar tus ideas y explorar nuevas oportunidades de
-        colaboración.
-      </p>
+      {eyebrow && <p class="text-primary text-sm uppercase tracking-[0.3em] mb-4">{eyebrow}</p>}
+      <h2 class="text-3xl md:text-5xl font-bold text-foreground mb-4">{title}</h2>
+      {intro && <p class="text-muted-foreground max-w-lg mx-auto">{intro}</p>}
     </div>
 
-    <div class="grid md:grid-cols-2 gap-12 transition-all duration-1000 opacity-0 translate-y-10" data-contact-grid>
-      <!-- Contact Info -->
+    <div class:list={['grid gap-12 transition-all duration-1000 opacity-0 translate-y-10', showForm && 'md:grid-cols-2']} data-contact-grid>
       <div class="space-y-8">
         <div class="flex items-start gap-4">
           <div class="w-12 h-12 bg-primary/10 flex items-center justify-center shrink-0">
-            <!-- Mail icon -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Z"/><path d="m22 6-10 7L2 6"/></svg>
           </div>
           <div>
             <h3 class="font-semibold text-foreground mb-1">Email</h3>
-            <a href="mailto:lunakuyenjofre@gmail.com" class="text-muted-foreground hover:text-primary transition-colors">lunakuyenjofre@gmail.com</a>
+            <a href={`mailto:${contact.email}`} class="text-muted-foreground hover:text-primary transition-colors">{contact.email}</a>
           </div>
         </div>
 
-        <div class="flex items-start gap-4">
-          <div class="w-12 h-12 bg-primary/10 flex items-center justify-center shrink-0">
-            <!-- Phone icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.81.3 1.6.57 2.36a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.72-1.14a2 2 0 0 1 2.11-.45c.76.27 1.55.45 2.36.57A2 2 0 0 1 22 16.92Z"/></svg>
+        {contact.phone && (
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-primary/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.81.3 1.6.57 2.36a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.72-1.14a2 2 0 0 1 2.11-.45c.76.27 1.55.45 2.36.57A2 2 0 0 1 22 16.92Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Teléfono</h3>
+              <a href={tel} class="text-muted-foreground hover:text-primary transition-colors">{contact.phone}</a>
+            </div>
           </div>
-          <div>
-            <h3 class="font-semibold text-foreground mb-1">Teléfono</h3>
-            <a href="tel:+34600123456" class="text-muted-foreground hover:text-primary transition-colors">2625403786</a>
-          </div>
-        </div>
+        )}
 
-        <div class="flex items-start gap-4">
-          <div class="w-12 h-12 bg-primary/10 flex items-center justify-center shrink-0">
-            <!-- MapPin icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5.5-8 12-8 12S4 15.5 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        {contact.location && (
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-primary/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5.5-8 12-8 12S4 15.5 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Ubicación</h3>
+              <p class="text-muted-foreground">{contact.location}</p>
+            </div>
           </div>
-          <div>
-            <h3 class="font-semibold text-foreground mb-1">Ubicación</h3>
-            <p class="text-muted-foreground">Mendoza, Argentina</p>
-          </div>
-        </div>
+        )}
 
-        <!-- Social Links -->
-        <div class="pt-8 border-t border-border">
-          <h3 class="font-semibold text-foreground mb-4">Sígueme</h3>
-          <div class="flex gap-4">
-            <a
-              href="https://www.instagram.com/lunakuyenn"
-              target="_blank"
-              class="w-12 h-12 bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
-              aria-label="Instagram"
-            >
-              <!-- Instagram icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path
-                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg
-              >
-            </a>
-
-            <a
-              href="https://www.youtube.com/@lunakuyenn"
-              target="_blank"
-              class="w-12 h-12 bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
-              aria-label="YouTube"
-            >
-              <!-- YouTube icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58Z"
-                />
-                <path d="m9.75 15.02 5.2-3-5.2-3v6Z" />
-              </svg>
-            </a>
+        {socials.length > 0 && (
+          <div class="pt-8 border-t border-border">
+            <h3 class="font-semibold text-foreground mb-4">Sígueme</h3>
+            <div class="flex flex-wrap gap-4">
+              {socials.map((s) => (
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-12 h-12 bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
+                  aria-label={socialLabel[s.network]}
+                >
+                  {s.network === 'instagram' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  )}
+                  {s.network === 'youtube' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58Z"/><path d="m9.75 15.02 5.2-3-5.2-3v6Z"/></svg>
+                  )}
+                  {s.network === 'facebook' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                  )}
+                  {s.network === 'tiktok' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                  )}
+                  {s.network === 'spotify' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 11.97c2.5-1.17 5.5-1 8 .5"/><path d="M7 9.5c3.3-1.33 7-1.2 10.5.6"/><path d="M8.5 14.6c2-.8 4.3-.7 6 .4"/></svg>
+                  )}
+                  {s.network === 'other' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  )}
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <!-- Contact Form -->
-      <form id="contactForm" class="space-y-6">
+      {showForm && (
         <div>
-          <label for="name" class="block text-sm font-medium text-foreground mb-2">Nombre</label>
-          <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors text-foreground" placeholder="Tu nombre" />
+          <form class="space-y-6" data-contact-form>
+            <div>
+              <label for={`${anchor}-name`} class="block text-sm font-medium text-foreground mb-2">Nombre</label>
+              <input type="text" id={`${anchor}-name`} name="name" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors text-foreground" placeholder="Tu nombre" />
+            </div>
+            <div>
+              <label for={`${anchor}-email`} class="block text-sm font-medium text-foreground mb-2">Email</label>
+              <input type="email" id={`${anchor}-email`} name="email" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors text-foreground" placeholder="tu@email.com" />
+            </div>
+            <div>
+              <label for={`${anchor}-message`} class="block text-sm font-medium text-foreground mb-2">Mensaje</label>
+              <textarea id={`${anchor}-message`} name="message" rows="5" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors resize-none text-foreground" placeholder="Cuéntame sobre tu proyecto..."></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:bg-accent transition-colors duration-300 disabled:opacity-60" data-submit>
+              <span data-idle>Enviar Mensaje</span>
+              <span data-loading class="hidden">Enviando...</span>
+            </button>
+          </form>
+          <div class="hidden mt-4 p-4 rounded-lg border" role="status" data-form-message></div>
         </div>
-        <div>
-          <label for="email" class="block text-sm font-medium text-foreground mb-2">Email</label>
-          <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors text-foreground" placeholder="tu@email.com" />
-        </div>
-        <div>
-          <label for="message" class="block text-sm font-medium text-foreground mb-2">Mensaje</label>
-          <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 bg-input border border-border focus:border-primary focus:outline-none transition-colors resize-none text-foreground" placeholder="Cuéntame sobre tu proyecto..."></textarea>
-        </div>
-        <button type="submit" id="submitBtn" class="w-full py-4 bg-primary text-primary-foreground uppercase tracking-widest text-sm hover:bg-accent transition-colors duration-300">
-          <span id="btnText">Enviar Mensaje</span>
-          <span id="btnLoading" class="hidden">Enviando...</span>
-        </button>
-      </form>
-      
-      <!-- Success/Error Messages -->
-      <div id="formMessage" class="hidden mt-4 p-4 rounded-lg"></div>
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-24 pt-8 border-t border-border text-center">
-      <p class="text-muted-foreground text-sm">© 2025 Luna Kuyen. Todos los derechos reservados.</p>
+      )}
     </div>
   </div>
 </section>
 
 <script>
-  const section = document.querySelector('[data-contact]') as HTMLElement | null;
-  const grid = document.querySelector('[data-contact-grid]') as HTMLElement | null;
+  const OK = ['bg-green-100', 'text-green-800', 'border-green-300'];
+  const ERR = ['bg-red-100', 'text-red-800', 'border-red-300'];
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (section && grid) {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          grid.classList.remove('opacity-0');
-          grid.classList.remove('translate-y-10');
-          grid.classList.add('opacity-100');
-          grid.classList.add('translate-y-0');
-        }
-      },
-      { threshold: 0.2 }
-    );
-    observer.observe(section);
-  }
+  document.querySelectorAll<HTMLElement>('[data-contact]').forEach((section) => {
+    const grid = section.querySelector<HTMLElement>('[data-contact-grid]');
+    if (grid) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          grid.classList.remove('opacity-0', 'translate-y-10');
+          grid.classList.add('opacity-100', 'translate-y-0');
+          observer.disconnect();
+        },
+        { threshold: 0.2 },
+      );
+      observer.observe(section);
+    }
 
-  // Contact form functionality
-  const contactForm = document.getElementById('contactForm') as HTMLFormElement | null;
-  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
-  const btnText = document.getElementById('btnText') as HTMLElement | null;
-  const btnLoading = document.getElementById('btnLoading') as HTMLElement | null;
-  const formMessage = document.getElementById('formMessage') as HTMLElement | null;
+    const form = section.querySelector<HTMLFormElement>('[data-contact-form]');
+    const submit = section.querySelector<HTMLButtonElement>('[data-submit]');
+    const idle = section.querySelector<HTMLElement>('[data-idle]');
+    const loading = section.querySelector<HTMLElement>('[data-loading]');
+    const message = section.querySelector<HTMLElement>('[data-form-message]');
+    if (!form || !submit || !idle || !loading || !message) return;
 
-  if (contactForm && submitBtn && btnText && btnLoading && formMessage) {
-    contactForm.addEventListener('submit', async (e) => {
+    const show = (text: string, ok: boolean) => {
+      message.textContent = text;
+      message.classList.remove('hidden', ...OK, ...ERR);
+      message.classList.add(...(ok ? OK : ERR));
+    };
+    const setLoading = (on: boolean) => {
+      submit.disabled = on;
+      idle.classList.toggle('hidden', on);
+      loading.classList.toggle('hidden', !on);
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Get form data
-      const formData = new FormData(contactForm);
-      const name = formData.get('name') as string;
-      const email = formData.get('email') as string;
-      const message = formData.get('message') as string;
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '').trim();
+      const email = String(data.get('email') ?? '').trim();
+      const text = String(data.get('message') ?? '').trim();
+      if (!name || !email || !text) return show('Por favor, completa todos los campos', false);
+      if (!emailRe.test(email)) return show('El formato del email no es válido', false);
 
-      // Basic client-side validation
-      if (!name || !email || !message) {
-        showMessage('Por favor, completa todos los campos', 'error');
-        return;
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        showMessage('El formato del email no es válido', 'error');
-        return;
-      }
-
-      // Show loading state
-      setLoadingState(true);
-      hideMessage();
-
+      setLoading(true);
+      message.classList.add('hidden');
       try {
-        const response = await fetch('/api/send-email', {
+        const res = await fetch('/api/send-email', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, email, message }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message: text }),
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          showMessage('¡Mensaje enviado correctamente! Te responderé pronto.', 'success');
-          contactForm.reset();
+        const result = await res.json().catch(() => ({}));
+        if (res.ok) {
+          show('¡Mensaje enviado correctamente! Te responderé pronto.', true);
+          form.reset();
         } else {
-          showMessage(result.error || 'Error al enviar el mensaje', 'error');
+          show(result.error || 'Error al enviar el mensaje', false);
         }
-      } catch (error) {
-        console.error('Error:', error);
-        showMessage('Error de conexión. Inténtalo de nuevo más tarde.', 'error');
+      } catch {
+        show('Error de conexión. Inténtalo de nuevo más tarde.', false);
       } finally {
-        setLoadingState(false);
+        setLoading(false);
       }
     });
-
-    function setLoadingState(loading: boolean) {
-      if (submitBtn && btnText && btnLoading) {
-        submitBtn.disabled = loading;
-        if (loading) {
-          btnText.classList.add('hidden');
-          btnLoading.classList.remove('hidden');
-        } else {
-          btnText.classList.remove('hidden');
-          btnLoading.classList.add('hidden');
-        }
-      }
-    }
-
-    function showMessage(text: string, type: 'success' | 'error') {
-      if (formMessage) {
-        formMessage.textContent = text;
-        formMessage.classList.remove('hidden');
-        
-        // Remove existing classes
-        formMessage.classList.remove('bg-green-100', 'text-green-800', 'border-green-300', 'bg-red-100', 'text-red-800', 'border-red-300');
-        
-        if (type === 'success') {
-          formMessage.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-300');
-        } else {
-          formMessage.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-300');
-        }
-      }
-    }
-
-    function hideMessage() {
-      if (formMessage) {
-        formMessage.classList.add('hidden');
-      }
-    }
-  }
+  });
 </script>

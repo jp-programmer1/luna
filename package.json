@@ -6,6 +6,9 @@
     "build:shared": "pnpm --filter @luna/shared build",
     "dev:api": "pnpm --filter @luna/shared build && pnpm --filter luna-api start:dev",
     "build:api": "pnpm --filter @luna/shared build && pnpm --filter luna-api build",
-    "test:api": "pnpm --filter @luna/shared build && pnpm --filter luna-api test"
+    "test:api": "pnpm --filter @luna/shared build && pnpm --filter luna-api test && pnpm --filter luna-api test:e2e",
+    "dev:panel": "pnpm --filter luna-panel dev",
+    "dev:site": "pnpm --filter luna-portafolio dev",
+    "build:panel": "pnpm --filter luna-panel build"
   }
 }

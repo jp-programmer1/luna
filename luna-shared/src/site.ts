@@ -199,7 +199,9 @@ export function createSection(type: SectionType, takenAnchors: Iterable<string> 
     type,
     anchor,
     navLabel: defaults.navLabel,
-    showInNav: true,
+    // Si ya hay una sección con ese nombre, la nueva no se suma al menú
+    // (evita "Biografía" dos veces); Luna la puede agregar desde el editor.
+    showInNav: anchor === base,
     visible: true,
     variant: 'plain',
     props: structuredClone(defaults.props),

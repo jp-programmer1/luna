@@ -1,0 +1,20 @@
+---
+import type { RichText } from '@luna/shared';
+import { renderRichText } from '../lib/rich-text';
+import { variantClass } from '../lib/site';
+
+interface Props {
+  anchor: string;
+  variant: 'plain' | 'card';
+  title: string;
+  body: RichText;
+}
+const { anchor, variant, title, body } = Astro.props;
+---
+
+<section id={anchor} class:list={['relative z-20 py-24 px-6', variantClass(variant)]}>
+  <div class="container mx-auto max-w-3xl">
+    {title && <h2 class="text-3xl md:text-4xl font-bold mb-6 text-foreground">{title}</h2>}
+    <div class="space-y-4 text-muted-foreground leading-relaxed text-lg" set:html={renderRichText(body)} />
+  </div>
+</section>

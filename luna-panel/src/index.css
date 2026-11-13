@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Paleta del panel: la del sitio, un punto más clara para leer y editar cómodo. */
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --color-ground: #0b0912;
+  --color-sidebar: #0e0b16;
+  --color-surface: #14111d;
+  --color-surface-2: #1b1726;
+  --color-line: #2a2438;
+  --color-line-soft: #221d2e;
+  --color-line-strong: #3a3350;
+
+  --color-ink: #eeebf5;
+  --color-ink-2: #d6d1e2;
+  --color-ink-3: #b7b1c6;
+  --color-muted: #a39db3;
+  --color-faint: #8c86a0;
+
+  --color-brand: #a78bfa;
+  --color-brand-soft: #c4b5fd;
+  --color-brand-ink: #160f26;
+  --color-pending: #f2b45c;
+  --color-ok: #5bd88a;
+  --color-danger: #f49a9a;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Editor de texto (Tiptap) */
+.rich-editor .ProseMirror {
+  min-height: 160px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  outline: none;
+  color: var(--color-ink-2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.rich-editor .ProseMirror > * + * {
+  margin-top: 10px;
+}
+.rich-editor .ProseMirror ul {
+  list-style: disc;
+  padding-left: 22px;
+}
+.rich-editor .ProseMirror ol {
+  list-style: decimal;
+  padding-left: 22px;
+}
+.rich-editor .ProseMirror a {
+  color: var(--color-brand-soft);
+  text-decoration: underline;
+}
+.rich-editor .ProseMirror strong {
+  color: var(--color-ink);
+}

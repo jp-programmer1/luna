@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# luna-portafolio
 
-## Getting Started
+Sitio público de Luna Kuyen (lunakuyen.art). Astro 5 + adapter de Vercel. El contenido sale de `luna-api` (`/public/site`) y se dibuja con un registro de secciones; lo que Luna publica desde el panel aparece acá sin tocar código.
 
-First, run the development server:
+## Desarrollo
+
+Desde la raíz `luna/`, con la API corriendo (`pnpm dev:api`):
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp luna-portafolio/.env.example luna-portafolio/.env   # LUNA_API_URL=http://localhost:3000
+pnpm --filter @luna/shared build
+pnpm --filter luna-portafolio dev                     # http://localhost:4321
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Si la API no responde, el sitio se arma con `src/data/site.fallback.json` (el contenido actual) y avisa en la consola.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cómo está armado
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  lib/site.ts               lee /public/site o /public/preview/:token, con respaldo
+  lib/rich-text.ts          texto con formato (JSON) → HTML con lista blanca
+  components/SitePage.astro layout, SEO, menú, secciones y footer
+  components/SectionRenderer.astro   registro tipo → componente
+  pages/index.astro         sitio publicado (cacheado con ISR)
+  pages/preview/[token].astro        borrador para el iframe del panel (sin caché, noindex)
+  data/site.fallback.json   respaldo si la API está caída
+```
 
-## Learn More
+Sumar un tipo de sección: esquema en `luna-shared`, componente en `src/components` y una línea en `SectionRenderer.astro`.
 
-To learn more about Next.js, take a look at the following resources:
+## Publicar sin redeploy (ISR)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Con `REVALIDATE_TOKEN` definido, Vercel cachea la home y la regenera cuando la API le pega con el header `x-prerender-revalidate` (al tocar "Publicar" en el panel). Como red de seguridad, la caché vence sola a la hora.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+En Vercel:
 
-## Deploy on Vercel
+1. Root Directory: `luna-portafolio` (con "Include files outside the root directory" activado, para que instale el workspace). El build command queda el de siempre: el portafolio solo usa los tipos de `@luna/shared`, no hace falta compilarlo antes.
+2. Variables: `LUNA_API_URL`, `REVALIDATE_TOKEN` (el mismo de `luna-api/.env`) y las de Google y Resend que ya tenías.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Todavía en fase 1
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- La galería sigue leyendo Drive desde `src/pages/api/drive/*`; en la fase 2 pasa a la API con títulos y orden editables.
+- El formulario sigue mandando mail desde `src/pages/api/send-email.ts`; en la fase 2 pasa a `/public/contact` y a la bandeja del panel.
+- La foto de la bio usa `/bio.jpg` hasta que exista la biblioteca de fotos.

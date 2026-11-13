@@ -1,0 +1,133 @@
+{
+  "settings": {
+    "name": "Luna Kuyen",
+    "seo": {
+      "title": "Luna Kuyen | Artista Escénica",
+      "description": "Luna Kuyen - Artista Escénica. Bailarina, actriz y performer con experiencia en teatro, danza contemporánea y artes escénicas.",
+      "ogImageId": null
+    },
+    "contact": {
+      "email": "lunakuyenjofre@gmail.com",
+      "phone": "2625403786",
+      "location": "Mendoza, Argentina"
+    },
+    "socials": [
+      {
+        "network": "instagram",
+        "url": "https://www.instagram.com/lunakuyenn"
+      },
+      {
+        "network": "youtube",
+        "url": "https://www.youtube.com/@lunakuyenn"
+      }
+    ],
+    "footerText": "Luna Kuyen. Todos los derechos reservados."
+  },
+  "sections": [
+    {
+      "id": "3214d012-3c97-4ea0-9676-5b2f0588f40e",
+      "anchor": "inicio",
+      "navLabel": "Inicio",
+      "showInNav": true,
+      "visible": true,
+      "variant": "plain",
+      "type": "hero",
+      "props": {
+        "eyebrow": "Artista Escénica",
+        "title": "Luna",
+        "highlight": "Kuyen",
+        "subtitle": "Teatro • Danza • Performance",
+        "buttons": [
+          {
+            "label": "Descubrir",
+            "href": "#biografia"
+          },
+          {
+            "label": "Contacto",
+            "href": "#contacto"
+          }
+        ],
+        "backgroundImageId": null
+      }
+    },
+    {
+      "id": "5d2d2753-bb96-4991-a5e3-529c80da3d9c",
+      "anchor": "biografia",
+      "navLabel": "Biografía",
+      "showInNav": true,
+      "visible": true,
+      "variant": "plain",
+      "type": "biography",
+      "props": {
+        "title": "Biografía",
+        "body": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Artista escénica apasionada por crear experiencias únicas que conectan con el público desde la emoción y la sorpresa. Su formación en danzas variadas, teatro físico, clown, pantomima, circo y maquillaje artístico la ha convertido en una intérprete versátil capaz de adaptarse a cualquier proyecto: desde intervenciones con fuego que iluminan eventos corporativos, fiestas y shows musicales, hasta personajes cautivadores para eventos escolares, celebraciones privadas y propuestas escénicas experimentales. Además, ha desempeñado su rol docente tanto en danzas como en teatro, generando espacios pedagógico-didácticos que se adaptan a cualquier sujeto de aprendizaje."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Su perspectiva se basa en impulsar un arte versátil que posibilite la fusión con diversas disciplinas y formatos, con el objetivo de generar comunidad, trabajar en equipo y enriquecer propuestas."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "El compromiso, la disposición y el ideal de generar momentos memorables le permiten llevar magia y profesionalismo a cada proyecto, superar expectativas y crear conexiones genuinas con cada audiencia."
+                }
+              ]
+            }
+          ]
+        },
+        "imageId": null,
+        "imageAlt": "Luna Kuyen - Retrato",
+        "imageSide": "left"
+      }
+    },
+    {
+      "id": "903559e4-ffb5-42bf-a46f-4b92c2439bb1",
+      "anchor": "material",
+      "navLabel": "Material",
+      "showInNav": true,
+      "visible": true,
+      "variant": "card",
+      "type": "gallery",
+      "props": {
+        "eyebrow": "Portfolio",
+        "title": "Material",
+        "collectionIds": [],
+        "showTypeFilter": true
+      }
+    },
+    {
+      "id": "e4a6c520-46eb-464e-89e8-d1313726635a",
+      "anchor": "contacto",
+      "navLabel": "Contacto",
+      "showInNav": true,
+      "visible": true,
+      "variant": "card",
+      "type": "contact",
+      "props": {
+        "eyebrow": "Hablemos",
+        "title": "Contacto",
+        "intro": "¿Tienes un proyecto en mente? Me encantaría escuchar tus ideas y explorar nuevas oportunidades de colaboración.",
+        "showForm": true
+      }
+    }
+  ],
+  "media": {},
+  "updatedAt": "2026-11-13T00:00:00.000Z"
+}

@@ -1,9 +1,10 @@
 import { Resend } from "resend";
-console.log(process.env.RESEND_API_KEY);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 import type { APIRoute } from "astro";
+
+export const prerender = false;
 
 interface ContactFormData {
   name: string;

@@ -15,6 +15,8 @@ describe('esquemas de @luna/shared', () => {
     const b = createSection('biography', [a.anchor]);
     expect(a.anchor).toBe('biografia');
     expect(b.anchor).toBe('biografia-2');
+    expect(a.showInNav).toBe(true);
+    expect(b.showInNav).toBe(false);
     expect(Site.safeParse({ settings, sections: [a, b] }).success).toBe(true);
   });
 
@@ -47,10 +49,15 @@ describe('validateEnv', () => {
     MONGO_URI: 'mongodb://localhost:27017/luna',
     PANEL_ORIGIN: 'http://localhost:5173',
     PUBLIC_SITE_URL: 'http://localhost:4321',
+    PREVIEW_SECRET: 'x'.repeat(40),
   };
 
   it('acepta un .env completo y aplica defaults', () => {
     expect(validateEnv(ok)).toMatchObject({ PORT: 3000, NODE_ENV: 'development' });
+  });
+
+  it('en producción exige RESEND_API_KEY', () => {
+    expect(() => validateEnv({ ...ok, NODE_ENV: 'production' })).toThrow(/RESEND_API_KEY/);
   });
 
   it('corta si falta MONGO_URI', () => {
