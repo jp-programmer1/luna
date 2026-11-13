@@ -1,0 +1,37 @@
+# En el VPS: docker compose -f luna-api/docker-compose.yml up -d --build  (desde luna/)
+# En desarrollo alcanza con levantar solo Mongo: pnpm db:up
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-luna}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Definí MONGO_ROOT_PASSWORD en luna-api/.env}
+    # Solo localhost: Mongo nunca queda expuesto a internet.
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: luna-api/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGO_URI: mongodb://${MONGO_ROOT_USER:-luna}:${MONGO_ROOT_PASSWORD}@mongo:27017/luna?authSource=admin
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    profiles: ["prod"]
+
+volumes:
+  mongo-data:

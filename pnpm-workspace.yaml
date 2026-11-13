@@ -1,0 +1,13 @@
+packages:
+  - luna-shared
+  - luna-api
+  - luna-panel
+  - luna-portafolio
+
+# Movido desde luna-portafolio/pnpm-workspace.yaml
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true
+  '@nestjs/core': true
+  mongodb-memory-server: true

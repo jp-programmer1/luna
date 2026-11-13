@@ -1,0 +1,7 @@
+**/node_modules
+**/dist
+**/.env
+**/.astro
+**/.vercel
+luna-portafolio
+luna-panel

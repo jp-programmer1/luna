@@ -1,0 +1,20 @@
+{
+  "name": "@luna/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Esquemas Zod del sitio de Luna, compartidos por API, panel y portafolio",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}
